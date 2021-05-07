@@ -2,8 +2,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
 import { promisify } from 'util';
-import path from 'path';
-import listr from 'listr';
 import { projectInstall } from 'pkg-install'
 import Listr from 'listr';
 
