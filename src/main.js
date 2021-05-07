@@ -2,8 +2,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
 import { promisify } from 'util';
-import path from 'path';
-import listr from 'listr';
 import { projectInstall } from 'pkg-install'
 import Listr from 'listr';
 
@@ -12,6 +10,7 @@ import { copyTemplateFiles } from '../services/copy-template';
 import { initGit } from '../services/init-git';
 import { createGitIgnore } from '../services/create-gitignore';
 import { createLicense } from '../services/create-lis';
+import { templateDir } from '../services/get-child-path';
 
 const access = promisify(fs.access);
 
@@ -23,21 +22,19 @@ export async function createProject(options) {
     targetDirectory: options.targetDirectory || process.cwd(),
   };
 
+  console.log('options from the createProject() => ', options);
+
   // cache current file directory
   const currentFileUrl = import.meta.url;
 
-  // make the program go to the desired template name according to the chosen boilerplate
-  const templateDir = path.resolve(
-    new URL(currentFileUrl).pathname.slice(1), //slice for windows
-    '../../templates',
-    options.template.toLowerCase()
-  );
-  // inject the templateDirectory
-  options.templateDirectory = templateDir;
+  // get child path for the correct boilerplate
+  const finalTemplateDir = templateDir(options, currentFileUrl, options.template)
+
+  options.templateDirectory = finalTemplateDir;
 
   // try accessing to verify if we can access templates directory
   try {
-    await access(templateDir, fs.constants.R_OK);
+    await access(finalTemplateDir, fs.constants.R_OK);
   } catch (err) {
     console.error('%s Invalid template name', chalk.red.bold('ERROR'));
     process.exit(1);

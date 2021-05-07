@@ -3,10 +3,6 @@ import inquirer from 'inquirer';
 import { createProject } from './main'
 // const responsiveVoice = require('responsive-voice-node');
 
-var vm = require("vm");
-var fs = require("fs");
-
-
 function parseArguments(rawArgs) {
   const args = arg(
     {
@@ -60,12 +56,54 @@ async function promptOptions(options) {
     });
   }
 
-  const answers = await inquirer.prompt(questions);
-  return {
-    ...options,
-    template: options.template || answers.template,
-    git: options.git || answers.git,
-  }
+  const results = await inquirer.prompt(questions)
+    .then(async (ans) => {
+      // console.log(ans);
+      if (ans.template === 'vuejs') {
+        const vueres = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'childTemplate',
+            message: 'Choose a boilerplate to start with?',
+            choices: ['basic', 'SSR', 'vuetify'],
+            default: 'basic'
+          }
+        ])
+
+        return {
+          ...options,
+          template: options.template || ans.template,
+          git: options.git || ans.git,
+          childTemplate: options.childTemplate || vueres.childTemplate,
+        }
+      } else if (ans.template === 'vitejs') {
+        const viteres = await inquirer.prompt([
+          {
+            type: 'list',
+            name: 'childTemplate',
+            message: 'Choose a boilerplate to start with?',
+            choices: ['JS', 'TS'],
+            default: 'JS'
+          }
+        ])
+
+        return {
+          ...options,
+          template: options.template || ans.template,
+          git: options.git || ans.git,
+          childTemplate: options.childTemplate || viteres.childTemplate,
+        }
+      }
+
+      return {
+        ...options,
+        template: options.template || ans.template,
+        git: options.git || ans.git,
+      }
+
+    });
+
+    return results
 }
 
 export async function cli(args) {
