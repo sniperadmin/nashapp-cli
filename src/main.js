@@ -23,17 +23,37 @@ export async function createProject(options) {
     targetDirectory: options.targetDirectory || process.cwd(),
   };
 
+  console.log('options from the createProject() => ', options);
+
   // cache current file directory
   const currentFileUrl = import.meta.url;
 
-  // make the program go to the desired template name according to the chosen boilerplate
-  const templateDir = path.resolve(
-    new URL(currentFileUrl).pathname.slice(1), //slice for windows
-    '../../templates',
-    options.template.toLowerCase()
-  );
-  // inject the templateDirectory
-  options.templateDirectory = templateDir;
+  let templateDir;
+  // check if the template name is vue
+
+  if (options.template === 'vuejs') {
+    // make the program go to the desired template name according to the chosen boilerplate
+
+    templateDir = path.resolve(
+      new URL(currentFileUrl).pathname.slice(1), //slice for windows
+      '../../templates/vuejs',
+      options.vueTemplate.toLowerCase()
+    );
+
+    // inject the templateDirectory
+    options.templateDirectory = templateDir;
+  } else {
+    // make the program go to the desired template name according to the chosen boilerplate
+
+    templateDir = path.resolve(
+      new URL(currentFileUrl).pathname.slice(1), //slice for windows
+      '../../templates',
+      options.template.toLowerCase()
+    );
+
+    // inject the templateDirectory
+    options.templateDirectory = templateDir;
+  }
 
   // try accessing to verify if we can access templates directory
   try {
