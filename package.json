@@ -1,0 +1,40 @@
+{
+  "name": "@nasr3090/nashapp",
+  "version": "1.0.0",
+  "description": "CLI for bootstrapping my projects",
+  "main": "src/index.js",
+  "bin": {
+    "@nasr3090/nashapp": "bin/nashapp",
+    "nashapp": "bin/nashapp"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "nashapp"
+  ],
+  "author": "Nasr Galal",
+  "license": "MIT",
+  "dependencies": {
+    "arg": "^5.0.0",
+    "chalk": "^4.1.1",
+    "esm": "^3.2.25",
+    "execa": "^5.0.0",
+    "gitignore": "^0.6.0",
+    "inquirer": "^8.0.0",
+    "listr": "^0.14.3",
+    "ncp": "^2.0.0",
+    "pkg-install": "^1.0.0",
+    "responsive-voice-node": "^1.0.0",
+    "spdx-license-list": "^6.4.0"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ]
+}
