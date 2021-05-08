@@ -15,7 +15,7 @@ import { templateDir } from '../services/get-child-path';
 const access = promisify(fs.access);
 
 // main boilerplate creation
-export async function createProject(options) {
+export async function createProject(options: any) {
   // add targetDirectory definition to options object
   options = {
     ...options,
