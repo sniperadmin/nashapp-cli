@@ -11,6 +11,7 @@
     "access": "public"
   },
   "scripts": {
+    "dev": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,6 +21,7 @@
   "author": "Nasr Galal",
   "license": "MIT",
   "dependencies": {
+    "@types/listr": "^0.14.3",
     "arg": "^5.0.0",
     "chalk": "^4.1.1",
     "esm": "^3.2.25",
@@ -36,5 +38,8 @@
     "bin/",
     "src/",
     "templates/"
-  ]
+  ],
+  "devDependencies": {
+    "@types/ncp": "^2.0.4"
+  }
 }

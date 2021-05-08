@@ -1,9 +1,10 @@
-import arg from 'arg';
-import inquirer from 'inquirer';
+const arg = require('arg');
+const inquirer = require('inquirer');
 import { createProject } from './main'
 // const responsiveVoice = require('responsive-voice-node');
+// import { Options } from '../interfaces/options'
 
-function parseArguments(rawArgs) {
+function parseArguments(rawArgs: string) {
   const args = arg(
     {
       '--git': Boolean,
@@ -26,7 +27,7 @@ function parseArguments(rawArgs) {
   }
 }
 
-async function promptOptions(options) {
+async function promptOptions(options: any) {
   const defaultTemplate = 'JavaScript';
   if (options.skipPrompts) {
     return {
@@ -57,7 +58,7 @@ async function promptOptions(options) {
   }
 
   const results = await inquirer.prompt(questions)
-    .then(async (ans) => {
+    .then(async (ans: any) => {
       // console.log(ans);
       if (ans.template === 'vuejs') {
         const vueres = await inquirer.prompt([
@@ -100,13 +101,12 @@ async function promptOptions(options) {
         template: options.template || ans.template,
         git: options.git || ans.git,
       }
-
     });
 
     return results
 }
 
-export async function cli(args) {
+export async function cli(args: string) {
   // responsiveVoice.speak('hi there...', 'UK English Male')
   let options = parseArguments(args);
   options = await promptOptions(options);
