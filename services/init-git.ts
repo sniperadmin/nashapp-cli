@@ -1,6 +1,6 @@
 import execa from 'execa';
 
-export async function initGit(options) {
+export async function initGit(options: any) {
   const result = await execa('git', ['init'], {
     cwd: options.targetDirectory,
   })

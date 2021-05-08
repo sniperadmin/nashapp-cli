@@ -1,11 +1,11 @@
 import path from 'path';
-import license from 'spdx-license-list/licenses/MIT';
+const license = require('spdx-license-list/licenses/MIT');
 import { promisify } from 'util';
 import fs from 'fs';
 
 const writeFile = promisify(fs.writeFile);
 
-export async function createLicense(options) {
+export async function createLicense(options: any) {
   const targetPath = path.join(options.targetDirectory, 'LICENSE');
   const lsContent = license.licenseText
     .replace('<year>', new Date().getFullYear())
