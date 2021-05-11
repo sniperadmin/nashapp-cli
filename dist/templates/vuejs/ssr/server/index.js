@@ -1,48 +1,30 @@
-const path = require('path');
-const express = require('express');
-const { createSSRApp } = require('vue')
-const { renderToString } = require('@vue/server-renderer')
-const manifest = require('../dist/ssr-manifest.json');
+const chalk = require("chalk");
+const http = require("http");
+const app = require("./app");
 
-const server = express();
+const server = http.createServer(app);
+const port = 5656;
 
-const appPath = path.join(__dirname, '../dist', manifest['app.js']);
-
-// importing app
-const App = require(appPath).default;
-
-function useAsset(dir) {
-  server.use(`/${dir}`, express.static(path.join(__dirname, '../dist', `${dir}`)));
+function onListening() {
+  console.log(chalk.green(`Server started at http://localhost:${port}`));
 }
 
-useAsset('img');
-useAsset('js');
-useAsset('css');
-useAsset('favicon.ico');
+function onError(error) {
+  switch (error.code) {
+    case "EACCES":
+      console.log(`Port ${port} requires elevated privileges`);
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.log(`Port ${port} is already in use`);
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
 
-// server.use('/img', express.static(path.join(__dirname, '../dist', 'img')));
-// server.use('/js', express.static(path.join(__dirname, '../dist', 'js')));
-// server.use('/css', express.static(path.join(__dirname, '../dist', 'css')));
-// server.use('/favicon.ico', express.static(path.join(__dirname, '../dist', 'favicon.ico')));
+server.listen(port);
 
-server.get('*', async (req, res) => {
-  // creating SSR app
-  const app = createSSRApp(App);
-  const appContent = await renderToString(app);
-
-  const html = `
-    <html>
-      <head>
-        <title>Welcome</title>
-        <link rel="stylesheet" href="${manifest['app.css']}">
-      </head>
-      <body>
-        ${appContent}
-      </body>
-    </html>
-  `
-
-  res.end(html)
-})
-
-server.listen(5000);
+server.on("listening", onListening);
+server.on("error", onError);

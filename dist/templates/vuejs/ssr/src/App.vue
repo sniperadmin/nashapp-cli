@@ -1,26 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome buddy to Your Vue.js App"/>
+  <div class="antialiased text-gray-700">
+    <component :is="layout">
+      <router-view />
+    </component>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, computed } from "vue";
+import { useRoute } from "vue-router";
+import LayoutDefault from "./layouts/LayoutDefault.vue";
+import LayoutBlank from "./layouts/LayoutBlank.vue";
 
-export default {
-  name: 'App',
+export default defineComponent({
+  name: "App",
+
   components: {
-    HelloWorld
-  }
-}
+    LayoutDefault,
+    LayoutBlank,
+  },
+
+  setup() {
+    const route = useRoute();
+    const layout = computed(() => route.meta.layout || "LayoutDefault");
+
+    return {
+      layout,
+    };
+  },
+});
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style src="./assets/styles/main.css"></style>

@@ -1,24 +1,25 @@
-# ssr
+# Vue 3 Server Side Rendering
 
-## Project setup
-```
-npm install
-```
+This is an expermental SSR setup with Vue 3.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Currently there's no HTML template support or automatic state serialization. Those should be handled manually by updating `server/utils/render.js`.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Scripts
 
-### Lints and fixes files
-```
-npm run lint
-```
+You can run the following scripts with `yarn` or `npm` like `yarn install`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+| Script    | Description                                          |
+| --------- | ---------------------------------------------------- |
+| `install` | Project setup                                        |
+| `dev`     | Compile and start development server with hot-reload |
+| `build`   | Compile and minify for production                    |
+| `start`   | Start production server                              |
+| `lint`    | Run linting for the entire project                   |
+
+## Linting
+
+I use [Prettier](https://prettier.io/), [ESlint](https://eslint.org/), and [eslint-plugin-vue](https://eslint.vuejs.org/) with `vue3-essential` settings. You can edit `.eslintrc.js` to edit settings to your personal preference.
+
+## CSS
+
+All CSS will be extracted into a single file. Using [Tailwind CSS](https://github.com/tailwindcss/tailwindcss), you're not supposed to be writing a lot of CSS, so splitting stylesheets is not required. If you don't want to use [Tailwind CSS](https://github.com/tailwindcss/tailwindcss), you'll need to update webpack configs.
