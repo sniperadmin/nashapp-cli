@@ -6,11 +6,11 @@ import { projectInstall } from 'pkg-install'
 import Listr from 'listr';
 
 // services and functions
-import { copyTemplateFiles } from '../services/copy-template';
-import { initGit } from '../services/init-git';
-import { createGitIgnore } from '../services/create-gitignore';
-import { createLicense } from '../services/create-lis';
-import { templateDir } from '../services/get-child-path';
+import { copyTemplateFiles } from '../services/copying';
+import { initGit } from '../services/git';
+import { createGitIgnore } from '../services/gitignore';
+import { createLicense } from '../services/lists';
+import { templateDir } from '../services/child-path';
 
 const access = promisify(fs.access);
 
