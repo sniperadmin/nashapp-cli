@@ -37,12 +37,13 @@ async function promptOptions(options: any) {
   }
 
   const questions = [];
+
   if (!options.template) {
     questions.push({
       type: 'list',
       name: 'template',
       message: 'Please choose a template',
-      choices: ['JavaScript', 'TypeScript', 'vuejs', 'vitejs'],
+      choices: ['JavaScript', 'TypeScript', 'VueJs', 'ViteJs'],
       default: defaultTemplate
     });
   }
@@ -60,14 +61,14 @@ async function promptOptions(options: any) {
   const results = await inquirer.prompt(questions)
     .then(async (ans: any) => {
       // console.log(ans);
-      if (ans.template === 'vuejs') {
+      if (ans.template === 'VueJs') {
         const vueres = await inquirer.prompt([
           {
             type: 'list',
             name: 'childTemplate',
-            message: 'Choose a boilerplate to start with?',
-            choices: ['basic', 'SSR', 'vuetify'],
-            default: 'basic'
+            message: 'Choose a Vue boilerplate to start with?',
+            choices: ['Vue3-Basic', 'Vue3-SSR', 'TypeScript'],
+            default: 'Vue3Basic'
           }
         ])
 
@@ -77,13 +78,13 @@ async function promptOptions(options: any) {
           git: options.git || ans.git,
           childTemplate: options.childTemplate || vueres.childTemplate,
         }
-      } else if (ans.template === 'vitejs') {
+      } else if (ans.template === 'ViteJs') {
         const viteres = await inquirer.prompt([
           {
             type: 'list',
             name: 'childTemplate',
             message: 'Choose a boilerplate to start with?',
-            choices: ['JS', 'TS'],
+            choices: ['JS', 'TS', 'SSR-Vue'],
             default: 'JS'
           }
         ])

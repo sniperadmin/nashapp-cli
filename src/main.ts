@@ -40,7 +40,7 @@ export async function createProject(options: any) {
     process.exit(1);
   }
 
-  // showing progress
+  // Tracking progress with each task
   const tasks = new Listr([
     {
       title: 'Copying project files ...',
