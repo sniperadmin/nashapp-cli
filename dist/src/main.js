@@ -5,11 +5,11 @@ import { promisify } from 'util';
 import { projectInstall } from 'pkg-install';
 import Listr from 'listr';
 // services and functions
-import { copyTemplateFiles } from '../services/copy-template';
-import { initGit } from '../services/init-git';
-import { createGitIgnore } from '../services/create-gitignore';
-import { createLicense } from '../services/create-lis';
-import { templateDir } from '../services/get-child-path';
+import { copyTemplateFiles } from '../services/copying';
+import { initGit } from '../services/git';
+import { createGitIgnore } from '../services/gitignore';
+import { createLicense } from '../services/lists';
+import { templateDir } from '../services/child-path';
 const access = promisify(fs.access);
 // main boilerplate creation
 export async function createProject(options) {
@@ -32,7 +32,7 @@ export async function createProject(options) {
         console.error('%s Invalid template name', chalk.red.bold('ERROR'));
         process.exit(1);
     }
-    // showing progress
+    // Tracking progress with each task
     const tasks = new Listr([
         {
             title: 'Copying project files ...',
